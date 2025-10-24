@@ -1,18 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 public class IntHeap
 {
-    private List<int> data = new List<int>(); // хранение элементов
-    private bool isMax; // true — max-куча, false — min-куча
+    private List<int> data = new List<int>(); 
+    private bool isMax; 
 
-    // Конструктор пустой кучи
+
     public IntHeap(bool isMaxHeap = true)
     {
         isMax = isMaxHeap;
     }
 
-    // Конструктор из массива
+   
     public IntHeap(int[] items, bool isMaxHeap = true)
     {
         isMax = isMaxHeap;
@@ -23,10 +23,9 @@ public class IntHeap
         BuildHeap();
     }
 
-    // Количество элементов
     public int Count => data.Count;
 
-    // Просмотреть корень (максимум или минимум)
+ 
     public int Peek()
     {
         if (data.Count == 0)
@@ -37,7 +36,6 @@ public class IntHeap
         return data[0];
     }
 
-    // Удалить и вернуть максимум (или минимум)
     public int Pop()
     {
         if (data.Count == 0)
@@ -58,14 +56,14 @@ public class IntHeap
         return root;
     }
 
-    // Добавить новый элемент
+
     public void Push(int value)
     {
         data.Add(value);
         SiftUp(data.Count - 1);
     }
 
-    // Изменить элемент по индексу
+
     public void UpdateKey(int index, int newValue)
     {
         if (index < 0 || index >= data.Count)
@@ -105,18 +103,16 @@ public class IntHeap
         return new IntHeap(combined.ToArray(), this.isMax);
     }
 
-    // ===================================================
-    // Вспомогательные методы
-    // ===================================================
 
-    // Построить кучу (heapify)
+
+
     private void BuildHeap()
     {
         for (int i = Parent(data.Count - 1); i >= 0; i--)
             SiftDown(i);
     }
 
-    // Поднятие элемента вверх
+
     private void SiftUp(int i)
     {
         while (i > 0)
@@ -131,7 +127,6 @@ public class IntHeap
         }
     }
 
-    // Опускание элемента вниз
     private void SiftDown(int i)
     {
         int n = data.Count;
@@ -155,8 +150,7 @@ public class IntHeap
     // Сравнение с учётом типа кучи
     private int Compare(int a, int b)
     {
-        // Для max-кучи: больше — выше
-        // Для min-кучи: меньше — выше (инвертируем)
+
         return isMax ? a.CompareTo(b) : b.CompareTo(a);
     }
 
@@ -169,21 +163,17 @@ public class IntHeap
         data[j] = tmp;
     }
 
-    // Вывод содержимого кучи
     public void Print()
     {
         Console.WriteLine(string.Join(", ", data));
     }
 }
 
-// ======================
-// Пример использования
-// ======================
 class Program
 {
     static void Main()
     {
-        // Создание max-кучи из массива
+     
         int[] arr = { 5, 3, 17, 10, 84, 19, 6, 22, 9 };
         IntHeap heap = new IntHeap(arr, isMaxHeap: true);
 
@@ -200,16 +190,15 @@ class Program
 
         heap.Print();
 
-        // Слияние куч
+        // Слияние куч и проверка ошибки
         IntHeap other = new IntHeap(new int[] { 1, 2, 3 }, isMaxHeap: true);
         IntHeap merged = heap.Merge(other);
 
         Console.WriteLine("\nСлияние куч:");
         merged.Print();
 
-        // Проверка ошибок
         Console.WriteLine("\nПопробуем удалить из пустой кучи:");
         var empty = new IntHeap();
-        empty.Pop();  // просто выведет сообщение, не упадёт
+        empty.Pop();  
     }
 }
